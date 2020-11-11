@@ -15,7 +15,7 @@ compute()
  */
 async function compute() {
 
-    const filename = 'E:\data\Rhino_Logo.3dm'
+    const filename = 'E:\\data\\Rhino_Logo.3dm'
 
     RhinoCompute.computeFetch('ms/convert3dmtofbx', [filename]).then( result => {
         console.log(result);
