@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,17 +12,22 @@ namespace Convert3dm
     {
         public static string Convert3dmToFbx(string uri) 
         {
+            // Here we would download the file from DS
 
-            //var doc = Rhino.FileIO.File3dm.Read(uri);
+            var doc = Rhino.RhinoDoc.CreateHeadless(null);
+            doc.Import(uri);
 
-            var doc = Rhino.RhinoDoc.Open(uri, out _);
+            var id = Guid.NewGuid();
+            string filename = @"E:\data\test"+ id + ".fbx";
+            doc.Export(filename);
 
-            string filename = @"E:\data\test.fbx";
-            string script = string.Format("_-SaveAs \"{0}\" _Enter _Enter", filename);
+            if ( File.Exists(filename) )
 
-            var result = Rhino.RhinoApp.RunScript(script, false);
+                // here we would push the file to DS
 
-            return filename;
+                return filename;
+            else
+                return "";
         }
     }
 }

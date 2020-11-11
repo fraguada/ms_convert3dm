@@ -28,10 +28,13 @@ namespace Convert3dm
         // loading and shut down, add options pages to the Rhino _Option command
         // and maintain plug-in wide options in a document.
 
+        public override PlugInLoadTime LoadTime => PlugInLoadTime.AtStartup;
+
         protected override LoadReturnCode OnLoad(ref string errorMessage)
         {
             Rhino.Runtime.HostUtils.RegisterComputeEndpoint("ms", typeof(Convert3dm));
             return base.OnLoad(ref errorMessage);
         }
+
     }
 }
