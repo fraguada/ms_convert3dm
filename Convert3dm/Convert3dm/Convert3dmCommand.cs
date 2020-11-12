@@ -52,7 +52,13 @@ namespace Convert3dm
                 return Result.Failure;
             }
 
-            var result = Convert3dm.Convert3dmToFbx(selectedFileName);
+            var file = Rhino.FileIO.File3dm.Read(selectedFileName);
+
+            var arr = file.ToByteArray();
+
+            var b64 = Convert.ToBase64String(arr);
+
+            var result = Convert3dm.Convert3dmToFbx(b64);
 
             RhinoApp.WriteLine("Converted file: " + result);
 
