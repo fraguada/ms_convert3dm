@@ -22,9 +22,10 @@ async function compute() {
     const res = await fetch(filename)
     const buffer = await res.arrayBuffer()
     const buffer3dm = new Uint8Array(buffer)
-    const bufferString = btoa(buffer3dm)
 
-    RhinoCompute.computeFetch('ms/convert3dmtofbx', [bufferString]).then( result => {
+    const b64ba = base64ByteArray(buffer3dm)
+
+    RhinoCompute.computeFetch('ms/convert3dmtofbx', [b64ba], true).then( result => {
         console.log(result);
     })
 

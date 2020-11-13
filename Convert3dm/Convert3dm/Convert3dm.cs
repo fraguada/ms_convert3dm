@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -19,8 +20,12 @@ namespace Convert3dm
             foreach (var obj in file3dm.Objects) 
                 doc.Objects.Add(obj.Geometry, obj.Attributes);
 
+            foreach (var mat in file3dm.AllMaterials)
+                doc.Materials.Add(mat);
+
             var id = Guid.NewGuid();
-            string filename = @"E:\data\test"+ id + ".fbx";
+            string path = Path.GetTempPath();
+            string filename = Path.Combine(path, "test_"+ id + ".fbx");
             doc.Export(filename);
 
             if (File.Exists(filename))
@@ -33,7 +38,7 @@ namespace Convert3dm
                 return Convert.ToBase64String(fbxArr);
             }
             else
-                return "";
+                return "no can do";
         }
     }
 }
